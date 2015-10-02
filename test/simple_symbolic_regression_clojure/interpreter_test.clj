@@ -104,6 +104,19 @@
        (fact "process-token with :swap and several numbers"
              (process-token [5 8 9 6 3 2 0] :swap) => [5 8 9 6 3 0 2]))
 
+(fact "dup gets a vector containing one argument, returns a vector with that element repeated"
+      (dup 5) => [5 5])
+
+(facts "about process-token with :dup"
+       (fact "process-token with :dup and an empty stack"
+             (process-token [] :dup) => [])
+       (fact "process-token with :dup and only one number"
+             (process-token [7] :dup) => [7 7])
+       (fact "process-token with :dup and two numbers"
+             (process-token [3 5] :dup) => [3 5 5])
+       (fact "process-token with :dup and several numbers on the stack"
+             (process-token [5 8 9 6 3 2 0] :dup) => [5 8 9 6 3 2 0 0]))
+
 (facts "about process-token with a variable"
        (fact "process-token with an undefined variable"
              (process-token [3 4 7] :x) => [3 4 7])
