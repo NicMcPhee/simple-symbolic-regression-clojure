@@ -33,7 +33,7 @@
 (defn add-values-to-stack
   [stack values]
   (if (sequential? values)
-    (vec (concat values stack))
+    (vec (concat stack values))
     (conj stack values)
     ))
 
