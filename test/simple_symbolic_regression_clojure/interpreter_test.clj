@@ -30,6 +30,8 @@
              (process-token [2/3 5/6] :+) => [3/2]
              (process-token [0 0] :+) => [0]
              )
+       (fact "process-token with :+ and many numbers"
+             (process-token [5 8 9 6 3 2] :+) => [5 8 9 6 5])
        )
 
 (facts "about process-token with :-"
@@ -43,6 +45,8 @@
              (process-token [2/3 5/6] :-) => [-1/6]
              (process-token [0 0] :-) => [0]
              )
+       (fact "process-token with :- and many numbers"
+             (process-token [5 8 9 6 3 2] :-) => [5 8 9 6 1])
        )
 
 (facts "about process-token with :÷"
@@ -61,6 +65,8 @@
              (process-token [1/2 0/5] :÷) => [1/2 0]
              (process-token [0.0 0.0] :÷) => [0.0 0.0]
              )
+       (fact "process-token with :÷ and many numbers"
+             (process-token [5 8 9 6 3 2] :÷) => [5 8 9 6 3/2])
        )
 
 (facts "about process-token with :*"
@@ -80,6 +86,8 @@
              (process-token [111111 22222222222222222] :*)
                => [2469133333333333308642N]
              )
+       (fact "process-token with :* and many numbers"
+             (process-token [5 8 9 6 3 2] :*) => [5 8 9 6 6])
        )
 
 
@@ -92,8 +100,9 @@
        (fact "process-token with :swap and only one number"
              (process-token [7] :swap) => [7])
        (fact "process-token with :swap and two numbers"
-             (process-token [3 5] :swap) => [5 3]))
-
+             (process-token [3 5] :swap) => [5 3])
+       (fact "process-token with :swap and several numbers"
+             (process-token [5 8 9 6 3 2 0] :swap) => [5 8 9 6 3 0 2]))
 
 (facts "about process-token with a variable"
        (fact "process-token with an undefined variable"
