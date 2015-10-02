@@ -4,10 +4,17 @@
 
 ;;; Interpreter
 
+;; Stack manipulation functions
+
 (defn swap
   [x y]
   [y x])
 
+(defn dup
+  [x]
+  [x x])
+
+;; Interpreting operators
 
 (defn translate-op [op]
   "Translate operators from the symbolic regression language to
@@ -20,7 +27,11 @@
     :* *'
     :÷ /
     :swap swap
+    :dup dup
     op))
+
+(defn legal-unary-op-stack? [op stack]
+  (>= (count stack) 1))
 
 (defn legal-division-stack? [stack]
   (not (zero? (peek stack))))
@@ -33,9 +44,18 @@
 (defn add-values-to-stack
   [stack values]
   (if (sequential? values)
-    (vec (concat values stack))
+    (vec (concat stack values))
     (conj stack values)
     ))
+
+(defn process-unary-operator [op stack]
+  "Apply a unary operaator to the given stack, returning the updated stack"
+  (if (legal-unary-op-stack? op stack)
+    (let [arg (peek stack)
+          new-stack (pop stack)]
+      (add-values-to-stack new-stack
+            ((translate-op op) arg)))
+    stack))
 
 (defn process-binary-operator [op stack]
   "Apply a binary operator to the given stack, returning the updated stack"
@@ -46,6 +66,9 @@
       (add-values-to-stack new-stack
             ((translate-op op) arg1 arg2)))
     stack))
+
+(defn unary-operator? [token]
+  (contains? #{:dup} token))
 
 (defn binary-operator? [token]
   (contains? #{:+ :- :* :÷ :swap} token))
@@ -62,6 +85,7 @@
    (cond
     (contains? bindings token) (conj stack (bindings token))
     (number? token) (conj stack token)
+    (unary-operator? token) (process-unary-operator token stack)
     (binary-operator? token) (process-binary-operator token stack)
     :else stack)
    ))
