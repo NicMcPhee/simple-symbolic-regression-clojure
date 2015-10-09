@@ -11,7 +11,7 @@
 
 (def sine-rubrics
   (repeatedly 100
-    #(let [x (rand (* 20 Math/PI))]
+    #(let [x (rand (* 2 Math/PI))]
       (->Rubric {:x x} (Math/sin x)))))
 
 
