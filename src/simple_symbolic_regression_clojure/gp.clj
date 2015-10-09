@@ -115,7 +115,7 @@
 ; TODO: This is too problem specific and should be in core not in gp,
 ; which will require making it an argument to make-baby?
 (def token-generator
-  ['(rand-int 100) :x :+ :- :* :÷ :swap])
+  ['(rand-int 100) :x :+ :- :* :÷ :swap :dup :pop-if-negative :pop-if-positive :pop-if-zero])
 
 
 (defn make-unscored-baby
