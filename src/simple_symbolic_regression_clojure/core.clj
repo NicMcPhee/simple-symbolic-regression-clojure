@@ -24,8 +24,11 @@
 
 (defn print-generation-report
   [population]
-  (println (str "Min error: "
-                (apply min (map get-score population)))))
+;;   (println (str "Min error: "
+;;                 (let [winner (apply min-key get-score population)]
+;;                   [(get-score winner) (:script winner)]))))
+  (println (:script (first population)))
+  (println (map get-score (take 10 population))))
 
 
 (defn -main
@@ -33,7 +36,7 @@
   [& args]
   (dorun
    (map print-generation-report
-        (take 100 (future-history initial-sine-population 0.05 sine-rubrics))))
+        (take 1000 (future-history initial-sine-population 0.05 sine-rubrics))))
   ; The shutdown-agents call is necessary to make sure that things like "lein run"
   ; terminate when they're done. Otherwise they can hang around waiting for other
   ; threads to finish.
