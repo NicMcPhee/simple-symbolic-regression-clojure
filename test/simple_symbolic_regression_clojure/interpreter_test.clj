@@ -117,6 +117,57 @@
        (fact "process-token with :dup and several numbers on the stack"
              (process-token [5 8 9 6 3 2 0] :dup) => [5 8 9 6 3 2 0 0]))
 
+(facts "about process-token with :pop-if-negative"
+       (fact "process-token with :pop-if-negative and an empty stack"
+             (process-token [] :pop-if-negative) => [])
+       (fact "process-token with :pop-if-negative and only one positive number"
+             (process-token [7] :pop-if-negative) => [7])
+       (fact "process-token with :pop-if-negative and only one negative number"
+             (process-token [-7] :pop-if-negative) => [])
+       (fact "process-token with :pop-if-negative and only one zero"
+             (process-token [0] :pop-if-negative) => [0])
+       (fact "process-token with :pop-if-negative with positive and several numbers on the stack"
+             (process-token [5 8 9 6 3 2] :pop-if-negative) => [5 8 9 6 3 2])
+       (fact "process-token with :pop-if-negative with negative and several numbers on the stack"
+             (process-token [5 8 9 6 3 -2] :pop-if-negative) => [5 8 9 6 3])
+       (fact "process-token with :pop-if-negative with zero and several numbers on the stack"
+             (process-token [5 8 9 6 3 2 0] :pop-if-negative) => [5 8 9 6 3 2 0])
+       )
+
+(facts "about process-token with :pop-if-positive"
+       (fact "process-token with :pop-if-positive and an empty stack"
+             (process-token [] :pop-if-positive) => [])
+       (fact "process-token with :pop-if-positive and only one positive number"
+             (process-token [7] :pop-if-positive) => [])
+       (fact "process-token with :pop-if-positive and only one negative number"
+             (process-token [-7] :pop-if-positive) => [-7])
+       (fact "process-token with :pop-if-positive and only one zero"
+             (process-token [0] :pop-if-positive) => [0])
+       (fact "process-token with :pop-if-positive with positive and several numbers on the stack"
+             (process-token [5 8 9 6 3 2] :pop-if-positive) => [5 8 9 6 3])
+       (fact "process-token with :pop-if-positive with negative and several numbers on the stack"
+             (process-token [5 8 9 6 3 -2] :pop-if-positive) => [5 8 9 6 3 -2])
+       (fact "process-token with :pop-if-positive with zero and several numbers on the stack"
+             (process-token [5 8 9 6 3 2 0] :pop-if-positive) => [5 8 9 6 3 2 0])
+       )
+
+(facts "about process-token with :pop-if-zero"
+       (fact "process-token with :pop-if-zero and an empty stack"
+             (process-token [] :pop-if-zero) => [])
+       (fact "process-token with :pop-if-zero and only one positive number"
+             (process-token [7] :pop-if-zero) => [7])
+       (fact "process-token with :pop-if-zero and only one negative number"
+             (process-token [-7] :pop-if-zero) => [-7])
+       (fact "process-token with :pop-if-zero and only one zero"
+             (process-token [0] :pop-if-zero) => [])
+       (fact "process-token with :pop-if-zero with positive and several numbers on the stack"
+             (process-token [5 8 9 6 3 2] :pop-if-zero) => [5 8 9 6 3 2])
+       (fact "process-token with :pop-if-zero with negative and several numbers on the stack"
+             (process-token [5 8 9 6 3 -2] :pop-if-zero) => [5 8 9 6 3 -2])
+       (fact "process-token with :pop-if-zero with zero and several numbers on the stack"
+             (process-token [5 8 9 6 3 2 0] :pop-if-zero) => [5 8 9 6 3 2])
+       )
+
 (facts "about process-token with a variable"
        (fact "process-token with an undefined variable"
              (process-token [3 4 7] :x) => [3 4 7])

@@ -14,6 +14,24 @@
   [x]
   [x x])
 
+(defn pop-if
+  [test x]
+  (if (test x)
+    []
+    [x]))
+
+(defn pop-if-negative
+  [x]
+  (pop-if #(< % 0) x))
+
+(defn pop-if-positive
+  [x]
+  (pop-if #(> % 0) x))
+
+(defn pop-if-zero
+  [x]
+  (pop-if #(= % 0) x))
+
 ;; Interpreting operators
 
 (defn translate-op [op]
@@ -28,6 +46,9 @@
     :÷ /
     :swap swap
     :dup dup
+    :pop-if-negative pop-if-negative
+    :pop-if-positive pop-if-positive
+    :pop-if-zero pop-if-zero
     op))
 
 (defn legal-unary-op-stack? [op stack]
@@ -68,7 +89,7 @@
     stack))
 
 (defn unary-operator? [token]
-  (contains? #{:dup} token))
+  (contains? #{:dup :pop-if-negative :pop-if-positive :pop-if-zero} token))
 
 (defn binary-operator? [token]
   (contains? #{:+ :- :* :÷ :swap} token))
