@@ -59,7 +59,7 @@
 
 (defn make-individual
   ([script]
-   (make-individual script nil))
+   (make-individual script -1000.0))
   ([script score]
    (->Individual script score)))
 
@@ -68,7 +68,7 @@
   (assoc individual :score score))
 
 (defn get-score [individual]
-  (:score individual))
+  (bigdec (:score individual)))
 
 
 ;;; Generating random scripts, individuals, etc.
@@ -115,7 +115,7 @@
 ; TODO: This is too problem specific and should be in core not in gp,
 ; which will require making it an argument to make-baby?
 (def token-generator
-  ['(rand-int 100) :x :+ :- :* :÷ :swap])
+  ['(rand-int 100) :x :+ :- :* :÷ :swap :dup :pop-if-negative :pop-if-positive :pop-if-zero])
 
 
 (defn make-unscored-baby

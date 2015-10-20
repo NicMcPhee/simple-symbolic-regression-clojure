@@ -120,11 +120,11 @@
                    individual (make-individual script nil)]
                (:script individual) => script
                (get-score individual) => nil))
-       (fact "works with no score given"
+       (fact "works with no score given, setting the score to -1000.0"
              (let [script [:x :y :+]
                    individual (make-individual script)]
                (:script individual) => script
-               (get-score individual) => nil))
+               (get-score individual) => -1000.0))
        )
 
 (fact "can set the score of an individual"
@@ -133,7 +133,7 @@
             individual (make-individual script)
             scored-individual (set-score individual score)]
         (:script individual) => script
-        (get-score individual) => nil
+        (get-score individual) => -1000.0
         (:script scored-individual) => script
         (get-score scored-individual) => score
         ))
@@ -204,7 +204,7 @@
 
 (fact "we can score an Individual with a Rubric (or set)"
   (let [random-dude (fn [] (random-individual token-generator 20))]
-    (get-score (random-dude)) => nil
+    (get-score (random-dude)) => -1000.0 ;; default
     (> (get-score (score-using-rubrics (random-dude) sine-rubrics)) 0) => true
     ))
 
@@ -222,8 +222,8 @@
                     (random-population 10 random-dude)
                     sine-rubrics)]
     (> (count (:script (make-unscored-baby population 0.01))) 0)  => true
-    (nil? (get-score (make-unscored-baby population 0.01))) => true
-  ))
+    (get-score (make-unscored-baby population 0.01))) => -1000.0
+  )
 
 
 ; (println (sort-by get-score initial-sine-population))
