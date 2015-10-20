@@ -59,7 +59,7 @@
 
 (defn make-individual
   ([script]
-   (make-individual script nil))
+   (make-individual script -1000.0))
   ([script score]
    (->Individual script score)))
 
@@ -68,7 +68,7 @@
   (assoc individual :score score))
 
 (defn get-score [individual]
-  (:score individual))
+  (bigdec (:score individual)))
 
 
 ;;; Generating random scripts, individuals, etc.
